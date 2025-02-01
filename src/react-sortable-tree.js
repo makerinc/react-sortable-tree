@@ -1,8 +1,4 @@
-import withScrolling, {
-  createHorizontalStrength,
-  createScrollingComponent,
-  createVerticalStrength,
-} from 'frontend-collective-react-dnd-scrollzone';
+
 import isEqual from 'lodash.isequal';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -10,6 +6,11 @@ import { DndContext, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { polyfill } from 'react-lifecycles-compat';
 import { AutoSizer, List } from 'react-virtualized';
+import withScrolling, {
+  createHorizontalStrength,
+  createScrollingComponent,
+  createVerticalStrength,
+} from './scrollzone/index';
 import 'react-virtualized/styles.css';
 import NodeRendererDefault from './node-renderer-default';
 import PlaceholderRendererDefault from './placeholder-renderer-default';
@@ -194,8 +195,8 @@ class ReactSortableTree extends Component {
 
     instanceProps.searchQuery = nextProps.searchQuery;
     instanceProps.searchFocusOffset = nextProps.searchFocusOffset;
-    newState.instanceProps = {...instanceProps, ...newState.instanceProps };
- 
+    newState.instanceProps = { ...instanceProps, ...newState.instanceProps };
+
     return newState;
   }
 
@@ -230,7 +231,7 @@ class ReactSortableTree extends Component {
     // it means that the drag was canceled or the dragSource dropped
     // elsewhere, and we should reset the state of this tree
     if (!monitor.isDragging() && this.state.draggingTreeData) {
-      setTimeout(() => {this.endDrag()});
+      setTimeout(() => { this.endDrag() });
     }
   }
 
@@ -320,9 +321,9 @@ class ReactSortableTree extends Component {
       getNodeKey,
       treeData: onlyExpandSearchedNodes
         ? toggleExpandedForAll({
-            treeData: instanceProps.treeData,
-            expanded: false,
-          })
+          treeData: instanceProps.treeData,
+          expanded: false,
+        })
         : instanceProps.treeData,
       searchQuery,
       searchMethod: searchMethod || defaultSearchMethod,
@@ -527,9 +528,9 @@ class ReactSortableTree extends Component {
                     //  for in the first place
                     oldNode === node
                       ? {
-                          ...oldNode,
-                          children: childrenArray,
-                        }
+                        ...oldNode,
+                        children: childrenArray,
+                      }
                       : oldNode,
                   getNodeKey: props.getNodeKey,
                 })
@@ -711,12 +712,12 @@ class ReactSortableTree extends Component {
                 typeof rowHeight !== 'function'
                   ? rowHeight
                   : ({ index }) =>
-                      rowHeight({
-                        index,
-                        treeIndex: index,
-                        node: rows[index].node,
-                        path: rows[index].path,
-                      })
+                    rowHeight({
+                      index,
+                      treeIndex: index,
+                      node: rows[index].node,
+                      path: rows[index].path,
+                    })
               }
               rowRenderer={({ index, style: rowStyle }) =>
                 this.renderRow(rows[index], {
@@ -744,11 +745,11 @@ class ReactSortableTree extends Component {
               typeof rowHeight !== 'function'
                 ? rowHeight
                 : rowHeight({
-                    index,
-                    treeIndex: index,
-                    node: row.node,
-                    path: row.path,
-                  }),
+                  index,
+                  treeIndex: index,
+                  node: row.node,
+                  path: row.path,
+                }),
           },
           getPrevRow: () => rows[index - 1] || null,
           matchKeys,
@@ -917,8 +918,8 @@ ReactSortableTree.defaultProps = {
   maxDepth: null,
   treeNodeRenderer: null,
   nodeContentRenderer: null,
-  onMoveNode: () => {},
-  onVisibilityToggle: () => {},
+  onMoveNode: () => { },
+  onVisibilityToggle: () => { },
   placeholderRenderer: null,
   reactVirtualizedListProps: {},
   rowHeight: null,
@@ -931,7 +932,7 @@ ReactSortableTree.defaultProps = {
   slideRegionSize: null,
   style: {},
   theme: {},
-  onDragStateChanged: () => {},
+  onDragStateChanged: () => { },
   onlyExpandSearchedNodes: false,
   rowDirection: 'ltr',
 };
